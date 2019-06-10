@@ -1,0 +1,57 @@
+3
+
+ë´\(  ã               @   sP   d dl mZ d dlZd dlmZmZmZ d dlm	Z	 d dl
+Z
+G dd„ deƒZdS )é    )ÚAPIViewN)Ú	connectDBÚ
+error_loggingÚinsert_into_db)ÚJsonResponsec               @   s   e Zd Zdd„ Zdd„ ZdS )ÚPortal_Mappingc             C   s~   t ƒ }y4tƒ }tjd|ƒ}|jjƒ }tddtt|ƒƒiiƒS  t	k
+rx } z"|j
+t|ƒƒ tddt|ƒiiƒS d}~X nX dS )z3
+
+        :param request:
+        :return:
+        z&select * from Portals_Category_taggingÚOutputZ
+columns_namesÚErrorN)r   r   ÚpdÚread_sql_queryÚcolumnsÚ
+get_valuesr   ÚlistÚsetÚ	ExceptionÚerrorÚstr)ÚselfÚrequestÚloggerÚengineÚdestination_table_dfÚdestination_table_columnsÚe© r   ú!/home/tatald/lnd/mapping/views.pyÚget	   s    
+zPortal_Mapping.getc             C   sÎ  t |jƒ tƒ }yv|jd }|dkrb|jd }t |jƒ tj|ƒ}|jjƒ }tdtt	|ƒƒiƒS |dkrî|jd }|jd }tj|ƒ}|j
+dƒ}|j|dd}t|ƒs¸td	d
+diiƒS tƒ }x|D ]}	|j
+||	 ƒ qÄW t|| dd
+d}
+nŒ|dkrz|jd }tƒ }tjd|ƒ}
+|
+jjƒ }tjtƒ}x0|D ](}x |D ]}|| j
+|| ƒ q8W q.W t |ƒ tj|ƒ}t|dd
+d}
+td	d
+|
+iiƒS  tk
+rÈ } z"|jt|ƒƒ td	dt|ƒiiƒS d }~X nX d S )NÚ	post_typeZ
+parse_fileÚfileZuploaded_file_columnsZ
+final_mappingÚ r   )Zaxisr   ZResponsezNo data to insertéd   ZPortals_Category_tagging)ÚdfÚ
+chunk_sizeÚ
+table_nameÚ	form_dataz&select * from Portals_Category_taggingr	   )ÚprintÚdatar   r
+   Zread_csvr   r
+   r   r   r   ZfillnaÚrenameÚlenÚappendr   r   r   ÚcollectionsÚdefaultdictZ	DataFramer   r   r   )r   r   r   r   Z	data_fileZdata_dfZdata_file_columnsZmappingsZcolumn_to_be_includedÚmappingÚoutputr&   r   r   r   Ztemp_form_dataÚcolumnr$   Zform_data_dfr   r   r   r   Úpost   sN    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+zPortal_Mapping.postN)Ú__name__Ú
+__module__Ú__qualname__r   r/   r   r   r   r   r      s   r   )Zrest_framework.viewsr   Zpandasr
+   Zlnd.baser   r   r   Údjango.httpr   r*   r   r   r   r   r   Ú<module>   s
+   
